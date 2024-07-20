@@ -1311,11 +1311,21 @@ class ImageDownloaderApp:
             image_data = BytesIO(response.content)
             image = Image.open(image_data)
             
+            bbox = image.getbbox()
+            trimmed_image = image.crop(bbox)
+            
+            canvas_size = (128, 128)  # Assuming the desired canvas size
+            canvas = Image.new('RGBA', canvas_size, (0, 0, 0, 0))
+            
+            image_w, image_h = trimmed_image.size
+            position = ((canvas_size[0] - image_w) // 2, (canvas_size[1] - image_h) // 2)
+            
+            canvas.paste(trimmed_image, position, trimmed_image)
+            
             image_path = f"{slot_index + 1}.png"
-            image.save(image_path)
+            canvas.save(image_path)
             
             self.slots[slot_index][1].insert(tk.END, name)
-            
         
         except requests.exceptions.RequestException as e:
             print("")
