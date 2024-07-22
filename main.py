@@ -1298,16 +1298,18 @@ class ImageDownloaderApp:
 
     
     def download_image(self, slot_index, name):
-        name = name.strip()
+        name = name.strip().lower()
         if name not in self.pokemon_urls:
             return
         
         url = self.pokemon_urls[name]
         
         try:
-            response = requests.get('https://resource.pokemon-home.com/battledata/img/pokei128/icon' + url + '.png')
-            response.raise_for_status()
-            
+            try:
+                response = requests.get('https://resource.pokemon-home.com/battledata/img/pokei128/icon' + url + '.png')
+                response.raise_for_status()
+            except:
+                response = request.get('https://resource.pokemon-home.com/battledata/img/pokei128/icon0000_f00_s0.png')
             image_data = BytesIO(response.content)
             image = Image.open(image_data)
             
