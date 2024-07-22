@@ -1253,7 +1253,8 @@ class ImageDownloaderApp:
 			"ironcrown": "1023_f00_s0",
 			"terapagos": "1024_f00_s0",
 			"pecharunt": "1025_f00_s0",
-
+            "": "0000_f00_s0",
+            "huevo": "0000_f00_s0",
 			"colmilargo": "0984_f00_s0",
 			"colagrito": "0985_f00_s0",
 			"furioseta": "0986_f00_s0",
@@ -1300,7 +1301,7 @@ class ImageDownloaderApp:
     def download_image(self, slot_index, name):
         name = name.strip().lower()
         if name not in self.pokemon_urls:
-            return
+            name = "huevo"
         
         url = self.pokemon_urls[name]
         
